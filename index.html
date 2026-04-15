@@ -18,9 +18,113 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px 20px;
+            padding: 30px 20px 100px;
         }
 
+        /* ========== PROFESSIONAL LOADING SCREEN ========== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-icon-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 50px;
+        }
+
+        .loading-ghost {
+            width: 100%;
+            height: 100%;
+            animation: ghostFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes ghostFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            75% { transform: translateY(-8px) rotate(-3deg); }
+        }
+
+        .loading-bar-container {
+            width: 320px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5, #00d2ff);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            animation: loadingProgress 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            width: 0%;
+            box-shadow: 0 0 20px rgba(58, 123, 213, 0.6);
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; opacity: 0.5; }
+            30% { width: 40%; opacity: 1; }
+            60% { width: 70%; }
+            80% { width: 90%; }
+            100% { width: 100%; opacity: 1; }
+        }
+
+        .loading-text {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: textPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: particleSpin 2s linear infinite;
+        }
+
+        .particle:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 50%; right: 0; animation-delay: 0.5s; }
+        .particle:nth-child(3) { bottom: 0; left: 50%; animation-delay: 1s; }
+        .particle:nth-child(4) { top: 50%; left: 0; animation-delay: 1.5s; }
+
+        @keyframes particleSpin {
+            0% { transform: rotate(0deg) translateX(75px) rotate(0deg); opacity: 1; }
+            100% { transform: rotate(360deg) translateX(75px) rotate(-360deg); opacity: 0.3; }
+        }
+
+        /* ========== MAIN CONTENT ========== */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -38,7 +142,7 @@
             color: #9fef48;
         }
 
-        /* MAIN CONTAINER - HORIZONTAL LAYOUT */
+        /* Main Container */
         .login-container {
             background-color: #ffffff;
             border-radius: 12px;
@@ -50,12 +154,10 @@
             width: 100%;
             max-width: 950px;
             min-height: 480px;
-            
-            /* FIX: Allow content to show fully - NO CROPPING! */
             overflow: visible;
         }
 
-        /* LEFT SIDE - GHOSTS SECTION */
+        /* Left Side - Ghosts Section */
         .ghosts-section {
             flex: 1 1 45%;
             max-width: 450px;
@@ -67,13 +169,11 @@
             padding: 25px 20px;
             background-color: #fafafa;
             border-right: 2px solid #e0e0e0;
-            
-            /* FIX: Ensure no cropping */
             overflow: visible;
             min-height: 400px;
         }
 
-        /* RIGHT SIDE - FORM SECTION */
+        /* Right Side - Form Section */
         .form-section {
             flex: 1 1 55%;
             max-width: 550px;
@@ -83,7 +183,6 @@
             flex-direction: column;
             justify-content: center;
             background-color: #ffffff;
-            
             overflow: visible;
             min-height: 400px;
         }
@@ -116,6 +215,7 @@
             transition: all 0.3s ease;
             outline: none;
             color: #333;
+            cursor: pointer;
         }
 
         .form-group input::placeholder {
@@ -146,14 +246,17 @@
             box-shadow: 0 6px 20px rgba(107, 127, 217, 0.4);
         }
 
-        /* Ghost Container - RESPONSIVE SIZING */
+        .sign-in-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Ghost Container */
         .ghost-container {
             position: relative;
             width: 90%;
             max-width: 280px;
             height: auto;
             aspect-ratio: 280 / 320;
-            
             overflow: visible;
         }
 
@@ -279,9 +382,59 @@
             50% { transform: scale(1.3) rotate(180deg); }
         }
 
-        /* ========== RESPONSIVE DESIGN - All Screen Sizes ========== */
+        /* ========== FOOTER ========== */
+        .footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 950px;
+        }
 
-        /* Tablets and Small Laptops */
+        .footer-text {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-text strong {
+            color: #cbd5e0;
+            font-weight: 600;
+        }
+
+        .qr-container {
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .qr-container:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .qr-container img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .qr-text {
+            color: #9fef48;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Design */
         @media (max-width: 900px) {
             .login-container {
                 max-width: 100%;
@@ -313,10 +466,9 @@
             }
         }
 
-        /* Mobile Phones - Still Horizontal but Optimized */
         @media (max-width: 650px) {
             body {
-                padding: 20px 10px;
+                padding: 20px 10px 80px;
             }
             
             .header {
@@ -387,9 +539,31 @@
                 padding: 10px;
                 font-size: 14px;
             }
+
+            .qr-container img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .qr-text {
+                font-size: 12px;
+            }
+
+            .loading-icon-wrapper {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 35px;
+            }
+
+            .loading-bar-container {
+                width: 250px;
+            }
+
+            .loading-text {
+                font-size: 14px;
+            }
         }
 
-        /* Very Small Screens */
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 32px;
@@ -406,11 +580,59 @@
     </style>
 </head>
 <body>
+
+    <!-- ========== PROFESSIONAL LOADING SCREEN ========== -->
+    <div class="loading-screen" id="loadingScreen">
+        
+        <div class="loading-icon-wrapper">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            
+            <svg class="loading-ghost" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="ghostGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <path d="M50 10 C30 10 15 25 15 45 L15 85 C15 92 19 96 24 93 C29 90 31 86 35 88 C39 90 41 96 46 93 C51 90 53 86 57 88 C61 90 63 96 68 93 C73 90 79 85 79 85 L79 45 C79 25 65 10 50 10 Z" 
+                      fill="url(#ghostGradient)" 
+                      stroke="#333" 
+                      stroke-width="2.5"
+                      filter="url(#glow)"/>
+                
+                <circle cx="37" cy="48" r="4" fill="#333"/>
+                <circle cx="63" cy="48" r="4" fill="#333"/>
+                <path d="M 43 62 Q 50 68 57 62" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                
+                <ellipse cx="32" cy="56" rx="4" ry="2.5" fill="#ffcdd2" opacity="0.6"/>
+                <ellipse cx="68" cy="56" rx="4" ry="2.5" fill="#ffcdd2" opacity="0.6"/>
+            </svg>
+        </div>
+        
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        
+        <p class="loading-text">Loading...</p>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
     <div class="header">
         <h1><span>Spooky</span> Login Form</h1>
     </div>
 
-    <!-- CONTAINER: LEFT (GHOSTS) + RIGHT (FORM) -->
+    <!-- Login Container -->
     <div class="login-container">
         
         <!-- LEFT: GHOSTS SECTION -->
@@ -431,7 +653,7 @@
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
 
-                <!-- GHOSTS SVG - Fully Visible -->
+                <!-- GHOSTS SVG - EXACT MATCH TO REFERENCE IMAGES -->
                 <svg class="ghost-svg" viewBox="0 0 280 330" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                     
                     <!-- SMALL GHOST (Left) -->
@@ -439,30 +661,42 @@
                         <path d="M70 0 C31.34 0 0 31.34 0 70 L0 130 C0 145 10 155 20 150 C30 145 35 135 45 140 C55 145 60 155 70 150 C80 145 85 135 95 140 C105 145 110 155 120 150 C130 145 140 130 140 130 L140 70 C140 31.34 108.66 0 70 0 Z" 
                               fill="white" stroke="#333" stroke-width="3"/>
                         
-                        <!-- SAD FACE (Default State) -->
+                        <!-- SAD FACE (Default State) - Reference Image 1 -->
                         <g id="smallGhostFaceSad">
-                            <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
-                            <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
-                            <path d="M 50 115 Q 70 100 90 115" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="38" cy="95" rx="6" ry="8" fill="#4fc3f7"/>
-                            <ellipse cx="102" cy="95" rx="6" ry="8" fill="#4fc3f7"/>
+                            <!-- Open oval eyes (sad expression) -->
+                            <ellipse cx="42" cy="72" rx="7" ry="9" fill="#333"/>
+                            <ellipse cx="98" cy="72" rx="7" ry="9" fill="#333"/>
+                            <!-- Downturned sad mouth (curved downward) -->
+                            <path d="M 52 110 Q 70 97 88 110" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <!-- Blue tears under eyes -->
+                            <ellipse cx="34" cy="92" rx="5.5" ry="7.5" fill="#4fc3f7"/>
+                            <ellipse cx="106" cy="92" rx="5.5" ry="7.5" fill="#4fc3f7"/>
                         </g>
 
-                        <!-- WORRIED FACE (Error State) -->
+                        <!-- WORRIED FACE (Error State) - Reference Image 2 -->
                         <g id="smallGhostFaceWorried" style="display: none;">
-                            <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
-                            <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
-                            <path d="M 55 115 Q 70 108 85 115" stroke="#c53030" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <!-- Open worried eyes (still open but more concerned) -->
+                            <ellipse cx="42" cy="72" rx="7" ry="9" fill="#333"/>
+                            <ellipse cx="98" cy="72" rx="7" ry="9" fill="#333"/>
+                            <!-- More downturned reddish mouth -->
+                            <path d="M 52 112 Q 70 99 88 112" stroke="#c53030" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </g>
 
-                        <!-- HAPPY FACE (Success State) -->
+                        <!-- HAPPY FACE (Success State) - Reference Image 3 -->
                         <g id="smallGhostFaceHappy" style="display: none;">
-                            <path d="M 35 72 Q 45 62 55 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
-                            <path d="M 85 72 Q 95 62 105 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="35" cy="84" rx="8" ry="5" fill="#ffcdd2" opacity="0.7"/>
-                            <ellipse cx="105" cy="84" rx="8" ry="5" fill="#ffcdd2" opacity="0.7"/>
-                            <path d="M 50 105 Q 70 128 90 105" stroke="#333" stroke-width="3" fill="#ef5350" stroke-linecap="round"/>
-                            <path d="M 22 92 Q 12 78 26 68" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <!-- Happy closed eyes (curved upward like smiling) -->
+                            <path d="M 32 68 Q 42 58 52 68" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M 88 68 Q 98 58 108 68" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            
+                            <!-- Rosy pink cheeks -->
+                            <ellipse cx="32" cy="82" rx="7" ry="4.5" fill="#ffcdd2" opacity="0.7"/>
+                            <ellipse cx="108" cy="82" rx="7" ry="4.5" fill="#ffcdd2" opacity="0.7"/>
+                            
+                            <!-- Big open happy smile (like laughing) -->
+                            <path d="M 48 100 Q 70 128 92 100" stroke="#333" stroke-width="3" fill="#ef5350" stroke-linecap="round"/>
+                            
+                            <!-- One hand raised up (celebration) -->
+                            <path d="M 20 88 Q 8 72 24 62" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </g>
                     </g>
 
@@ -471,33 +705,51 @@
                         <path d="M85 0 C38.06 0 0 38.06 0 85 L0 160 C0 178 12 190 25 184 C38 178 44 166 56 172 C68 178 74 190 86 184 C98 178 104 166 116 172 C128 178 134 190 146 184 C158 178 170 160 170 160 L170 85 C170 38.06 131.94 0 85 0 Z" 
                               fill="white" stroke="#333" stroke-width="3"/>
                         
-                        <!-- SAD FACE (Default State) -->
+                        <!-- SAD FACE (Default State) - Reference Image 1 -->
                         <g id="largeGhostFaceSad">
-                            <ellipse cx="55" cy="90" rx="10" ry="13" fill="#333"/>
-                            <ellipse cx="115" cy="90" rx="10" ry="13" fill="#333"/>
-                            <path d="M 62 138 Q 85 120 108 138" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="46" cy="115" rx="7" ry="10" fill="#4fc3f7"/>
-                            <ellipse cx="124" cy="115" rx="7" ry="10" fill="#4fc3f7"/>
+                            <!-- Large open sad eyes -->
+                            <ellipse cx="52" cy="87" rx="9" ry="12" fill="#333"/>
+                            <ellipse cx="118" cy="87" rx="9" ry="12" fill="#333"/>
+                            <!-- Big downturned sad mouth -->
+                            <path d="M 60 133 Q 85 117 110 133" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <!-- Blue tears -->
+                            <ellipse cx="42" cy="112" rx="6.5" ry="9" fill="#4fc3f7"/>
+                            <ellipse cx="128" cy="112" rx="6.5" ry="9" fill="#4fc3f7"/>
                         </g>
 
-                        <!-- CRYING FACE (Error State) -->
+                        <!-- CRYING FACE (Error State) - Reference Image 2 -->
                         <g id="largeGhostFaceCrying" style="display: none;">
-                            <path d="M 42 88 L 68 94 M 68 88 L 42 94" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
-                            <path d="M 102 88 L 128 94 M 128 88 L 102 94" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
-                            <ellipse cx="85" cy="135" rx="20" ry="24" fill="#dd6b20"/>
-                            <path d="M 72 128 Q 85 140 98 128" stroke="#333" stroke-width="2.5" fill="none"/>
-                            <ellipse cx="108" cy="118" rx="7" ry="11" fill="#4fc3f7"/>
-                            <path d="M 25 138 Q 12 122 28 112 M 145 138 Q 158 122 142 112" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <!-- Closed crying eyes (completely closed curved lines down - NOT X!) -->
+                            <path d="M 43 83 Q 53 89 63 83" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <path d="M 107 83 Q 117 89 127 83" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            
+                            <!-- Big open ORANGE/DARK RED mouth (as shown in reference image!) -->
+                            <ellipse cx="85" cy="134" rx="22" ry="26" fill="#dd6b20"/>
+                            <path d="M 71 126 Q 85 141 99 126" stroke="#333" stroke-width="2.5" fill="none"/>
+                            
+                            <!-- Single tear drop -->
+                            <ellipse cx="112" cy="116" rx="6.5" ry="10" fill="#4fc3f7"/>
+                            
+                            <!-- ONE hand raised up (worried/despair gesture - NOT two hands!) -->
+                            <path d="M 25 136 Q 10 118 29 106" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                         </g>
 
-                        <!-- HAPPY FACE (Success State) -->
+                        <!-- HAPPY FACE (Success State) - Reference Image 3 -->
                         <g id="largeGhostFaceHappy" style="display: none;">
-                            <path d="M 42 88 Q 55 76 68 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                            <path d="M 102 88 Q 115 76 128 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="42" cy="104" rx="13" ry="7" fill="#ffcdd2" opacity="0.7"/>
-                            <ellipse cx="128" cy="104" rx="13" ry="7" fill="#ffcdd2" opacity="0.7"/>
-                            <path d="M 58 125 Q 85 158 112 125" stroke="#333" stroke-width="3.5" fill="#ef5350" stroke-linecap="round"/>
-                            <path d="M 22 130 Q 6 110 25 94 M 148 130 Q 164 110 145 94" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <!-- Happy closed eyes (curved upward lines) -->
+                            <path d="M 40 87 Q 53 73 66 87" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <path d="M 104 87 Q 117 73 130 87" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            
+                            <!-- Rosy pink cheeks -->
+                            <ellipse cx="40" cy="102" rx="12" ry="6.5" fill="#ffcdd2" opacity="0.7"/>
+                            <ellipse cx="130" cy="102" rx="12" ry="6.5" fill="#ffcdd2" opacity="0.7"/>
+                            
+                            <!-- Very big open happy smile (laughing expression) -->
+                            <path d="M 56 122 Q 85 158 114 122" stroke="#333" stroke-width="3.5" fill="#ef5350" stroke-linecap="round"/>
+                            
+                            <!-- BOTH hands raised up high (victory/celebration pose!) -->
+                            <path d="M 21 128 Q 3 107 24 90" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <path d="M 149 128 167 107 146 90" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                         </g>
                     </g>
                 </svg>
@@ -528,7 +780,148 @@
         
     </div>
 
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <p class="footer-text">
+            © 2024 <strong>Axentro</strong> – All Rights Reserved<br>
+            By <strong>Axentro Team</strong>
+        </p>
+        
+        <a href="https://axentro-official.github.io/axentro-website/links.html" target="_blank" class="qr-container">
+            <img src="qr-links.png" alt="QR Code Links" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22white%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22%23333%22>QR Code</text></svg>'">
+            <p class="qr-text">Scan Me / Click On Me</p>
+        </a>
+    </footer>
+
+    <!-- ========== JAVASCRIPT WITH UNIQUE PROFESSIONAL SOUNDS ========== -->
     <script>
+        let audioContext;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+
+        // Click Sound (Soft Glass Tap)
+        function playClickSound() {
+            try {
+                const ctx = initAudio();
+                const osc = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                
+                osc.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(1200, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.04);
+                osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.08);
+                
+                gainNode.gain.setValueAtTime(0.25, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
+                
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.07);
+                
+            } catch (error) {
+                console.log('Click sound:', error);
+            }
+        }
+
+        // Success Sound (Cheerful Fanfare)
+        function playSuccessSound() {
+            try {
+                const ctx = initAudio();
+                
+                const notes = [
+                    { freq: 523.25, time: 0, dur: 0.15 },
+                    { freq: 659.25, time: 0.1, dur: 0.15 },
+                    { freq: 783.99, time: 0.2, dur: 0.2 },
+                    { freq: 1046.50, time: 0.35, dur: 0.3 }
+                ];
+                
+                notes.forEach(note => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = note.freq;
+                    
+                    const startTime = ctx.currentTime + note.time;
+                    
+                    gain.gain.setValueAtTime(0, startTime);
+                    gain.gain.linearRampToValueAtTime(0.25, startTime + 0.02);
+                    gain.gain.setValueAtTime(0.25, startTime + note.dur * 0.7);
+                    gain.gain.exponentialRampToValueAtTime(0.001, startTime + note.dur);
+                    
+                    osc.start(startTime);
+                    osc.stop(startTime + note.dur);
+                });
+                
+            } catch (error) {
+                console.log('Success sound:', error);
+            }
+        }
+
+        // Error Sound (Wrong Answer Buzzer)
+        function playErrorSound() {
+            try {
+                const ctx = initAudio();
+                
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                
+                osc1.connect(gainNode);
+                osc2.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                
+                osc1.type = 'square';
+                osc2.type = 'square';
+                
+                osc1.frequency.value = 220;
+                osc2.frequency.value = 233;
+                
+                gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+                gainNode.gain.setValueAtTime(0.2, ctx.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+                
+                const startTime = ctx.currentTime;
+                osc1.start(startTime);
+                osc2.start(startTime);
+                osc1.stop(startTime + 0.25);
+                osc2.stop(startTime + 0.25);
+                
+            } catch (error) {
+                console.log('Error sound:', error);
+            }
+        }
+
+        document.querySelectorAll('input, button, .qr-container').forEach(element => {
+            element.addEventListener('click', () => playClickSound());
+            element.addEventListener('touchstart', (e) => {
+                if (e.target === element) playClickSound();
+            });
+        });
+
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.classList.add('hidden');
+                
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 1000);
+            }, 2500);
+        });
+
+        // Ghost Animations
         const loginForm = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -616,9 +1009,11 @@
             if (email === VALID_USERNAME && password === VALID_PASSWORD) {
                 setGhostState('happy');
                 showStatus('Login Successful!', 'success');
+                playSuccessSound();
             } else {
                 setGhostState('worried');
                 showStatus('Login Failed!', 'error');
+                playErrorSound();
                 
                 passwordInput.value = '';
                 passwordInput.focus();
