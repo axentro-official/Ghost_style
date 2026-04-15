@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spooky Login Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #1a2332;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 72px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .header h1 span {
+            color: #9fef48;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            min-height: 450px;
+        }
+
+        .ghosts-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 40px;
+            background-color: #fafafa;
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-title {
+            font-size: 36px;
+            color: #333333;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #6b7fd9;
+        }
+
+        .sign-in-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6b7fd9 0%, #8b5fbf 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .sign-in-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 127, 217, 0.4);
+        }
+
+        /* Ghost SVG Styles */
+        .ghost-container {
+            position: relative;
+            width: 280px;
+            height: 300px;
+        }
+
+        .ghost-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Speech Bubble */
+        .speech-bubble {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 15px;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 14px solid #333;
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Status Messages */
+        .status-message {
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .status-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .status-message.error {
+            background-color: #fce8e8;
+            color: #c53030;
+            border-color: #feb2b2;
+        }
+
+        .status-message.success {
+            background-color: #e6ffed;
+            color: #276749;
+            border-color: #9ae6b4;
+        }
+
+        .try-again-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #718096;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .try-again-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .try-again-btn:hover {
+            background-color: #4a5568;
+        }
+
+        /* Stars for success state */
+        .star {
+            position: absolute;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .star.show {
+            opacity: 1;
+            animation: sparkle 1s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+        }
+
+        /* Ghost animations */
+        .ghost-body {
+            transition: all 0.3s ease;
+        }
+
+        .ghost-face {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><span>Spooky</span> Login Form</h1>
+    </div>
+
+    <div class="login-container">
+        <div class="ghosts-section">
+            <div class="ghost-container">
+                <!-- Speech Bubble -->
+                <div id="speechBubble" class="speech-bubble"></div>
+                
+                <!-- Stars -->
+                <svg class="star" id="star1" style="top: 80px; right: 40px; width: 24px; height: 24px;" viewBox="0 0 24 24" fill="#333">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <svg class="star" id="star2" style="top: 120px; left: 20px; width: 20px; height: 20px;" viewBox="0 0 24 24" fill="#333">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <svg class="star" id="star3" style="bottom: 100px; right: 20px; width: 22px; height: 22px;" viewBox="0 0 24 24" fill="#333">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+
+                <!-- Main Ghost SVG -->
+                <svg class="ghost-svg" viewBox="0 0 280 320" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Small Ghost (Left) -->
+                    <g id="smallGhost" transform="translate(20, 160)">
+                        <path class="ghost-body" d="M70 0 C31.34 0 0 31.34 0 70 L0 130 C0 145 10 155 20 150 C30 145 35 135 45 140 C55 145 60 155 70 150 C80 145 85 135 95 140 C105 145 110 155 120 150 C130 145 140 130 140 130 L140 70 C140 31.34 108.66 0 70 0 Z" fill="white" stroke="#333" stroke-width="3"/>
+                        
+                        <!-- Small Ghost Face - Sad State -->
+                        <g id="smallGhostFaceSad">
+                            <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
+                            <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
+                            <path d="M 50 115 Q 70 100 90 115" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="38" cy="95" rx="6" ry="8" fill="#4fc3f7"/>
+                            <ellipse cx="102" cy="95" rx="6" ry="8" fill="#4fc3f7"/>
+                        </g>
+
+                        <!-- Small Ghost Face - Crying State -->
+                        <g id="smallGhostFaceCrying" style="display: none;">
+                            <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
+                            <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
+                            <path d="M 50 118 Q 70 108 90 118" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="38" cy="98" rx="6" ry="8" fill="#4fc3f7"/>
+                            <ellipse cx="102" cy="98" rx="6" ry="8" fill="#4fc3f7"/>
+                        </g>
+
+                        <!-- Small Ghost Face - Happy State -->
+                        <g id="smallGhostFaceHappy" style="display: none;">
+                            <path d="M 35 70 Q 45 60 55 70" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M 85 70 Q 95 60 105 70" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="35" cy="82" rx="8" ry="5" fill="#ffcdd2" opacity="0.6"/>
+                            <ellipse cx="105" cy="82" rx="8" ry="5" fill="#ffcdd2" opacity="0.6"/>
+                            <path d="M 50 105 Q 70 125 90 105" stroke="#333" stroke-width="3" fill="#ef5350" stroke-linecap="round"/>
+                            <path d="M 20 90 Q 15 80 25 75 M 120 90 Q 125 80 115 75" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        </g>
+                    </g>
+
+                    <!-- Large Ghost (Right) -->
+                    <g id="largeGhost" transform="translate(100, 120)">
+                        <path class="ghost-body" d="M85 0 C38.06 0 0 38.06 0 85 L0 160 C0 178 12 190 25 184 C38 178 44 166 56 172 C68 178 74 190 86 184 C98 178 104 166 116 172 C128 178 134 190 146 184 C158 178 170 160 170 160 L170 85 C170 38.06 131.94 0 85 0 Z" fill="white" stroke="#333" stroke-width="3"/>
+                        
+                        <!-- Large Ghost Face - Sad State -->
+                        <g id="largeGhostFaceSad">
+                            <ellipse cx="55" cy="90" rx="10" ry="13" fill="#333"/>
+                            <ellipse cx="115" cy="90" rx="10" ry="13" fill="#333"/>
+                            <path d="M 62 138 Q 85 120 108 138" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="46" cy="115" rx="7" ry="10" fill="#4fc3f7"/>
+                            <ellipse cx="124" cy="115" rx="7" ry="10" fill="#4fc3f7"/>
+                        </g>
+
+                        <!-- Large Ghost Face - Crying State -->
+                        <g id="largeGhostFaceCrying" style="display: none;">
+                            <!-- Closed eyes (crying) -->
+                            <path d="M 42 88 L 68 92 M 68 88 L 42 92" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
+                            <path d="M 102 88 L 128 92 M 128 88 L 102 92" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
+                            
+                            <!-- Open crying mouth -->
+                            <ellipse cx="85" cy="135" rx="18" ry="22" fill="#ef5350"/>
+                            <path d="M 73 128 Q 85 138 97 128" stroke="#333" stroke-width="2.5" fill="none"/>
+                            
+                            <!-- Tears -->
+                            <ellipse cx="46" cy="118" rx="7" ry="11" fill="#4fc3f7"/>
+                            <ellipse cx="124" cy="118" rx="7" ry="11" fill="#4fc3f7"/>
+                            
+                            <!-- Hands up -->
+                            <path d="M 25 140 Q 15 125 28 115 M 145 140 Q 155 125 142 115" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Large Ghost Face - Happy State -->
+                        <g id="largeGhostFaceHappy" style="display: none;">
+                            <!-- Happy closed eyes -->
+                            <path d="M 42 88 Q 55 76 68 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <path d="M 102 88 Q 115 76 128 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            
+                            <!-- Rosy cheeks -->
+                            <ellipse cx="42" cy="102" rx="12" ry="7" fill="#ffcdd2" opacity="0.6"/>
+                            <ellipse cx="128" cy="102" rx="12" ry="7" fill="#ffcdd2" opacity="0.6"/>
+                            
+                            <!-- Big smile -->
+                            <path d="M 58 125 Q 85 155 112 125" stroke="#333" stroke-width="3.5" fill="#ef5350" stroke-linecap="round"/>
+                            
+                            <!-- Happy hands up -->
+                            <path d="M 22 130 Q 8 110 25 95 M 148 130 Q 162 110 145 95" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="form-title">Sign In</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="text" id="email" name="email" placeholder="user" autocomplete="off">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="sign-in-btn">Sign In</button>
+            </form>
+
+            <div id="statusMessage" class="status-message"></div>
+            <button id="tryAgainBtn" class="try-again-btn" onclick="resetForm()">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const statusMessage = document.getElementById('statusMessage');
+        const speechBubble = document.getElementById('speechBubble');
+        const tryAgainBtn = document.getElementById('tryAgainBtn');
+
+        // Ghost face elements
+        const smallGhostFaceSad = document.getElementById('smallGhostFaceSad');
+        const smallGhostFaceCrying = document.getElementById('smallGhostFaceCrying');
+        const smallGhostFaceHappy = document.getElementById('smallGhostFaceHappy');
+        
+        const largeGhostFaceSad = document.getElementById('largeGhostFaceSad');
+        const largeGhostFaceCrying = document.getElementById('largeGhostFaceCrying');
+        const largeGhostFaceHappy = document.getElementById('largeGhostFaceHappy');
+
+        // Star elements
+        const star1 = document.getElementById('star1');
+        const star2 = document.getElementById('star2');
+        const star3 = document.getElementById('star3');
+
+        // Valid credentials
+        const VALID_USERNAME = 'admin';
+        const VALID_PASSWORD = '140';
+
+        function setGhostState(state) {
+            // Hide all faces first
+            smallGhostFaceSad.style.display = 'none';
+            smallGhostFaceCrying.style.display = 'none';
+            smallGhostFaceHappy.style.display = 'none';
+            
+            largeGhostFaceSad.style.display = 'none';
+            largeGhostFaceCrying.style.display = 'none';
+            largeGhostFaceHappy.style.display = 'none';
+
+            // Hide stars
+            star1.classList.remove('show');
+            star2.classList.remove('show');
+            star3.classList.remove('show');
+
+            // Hide speech bubble
+            speechBubble.classList.remove('show');
+            speechBubble.textContent = '';
+
+            // Show appropriate faces based on state
+            if (state === 'sad') {
+                smallGhostFaceSad.style.display = 'block';
+                largeGhostFaceSad.style.display = 'block';
+            } else if (state === 'crying') {
+                smallGhostFaceCrying.style.display = 'block';
+                largeGhostFaceCrying.style.display = 'block';
+                speechBubble.textContent = 'Wrong Password';
+                setTimeout(() => speechBubble.classList.add('show'), 100);
+            } else if (state === 'happy') {
+                smallGhostFaceHappy.style.display = 'block';
+                largeGhostFaceHappy.style.display = 'block';
+                speechBubble.textContent = 'Correct Password!';
+                setTimeout(() => speechBubble.classList.add('show'), 100);
+                
+                // Show stars with delay
+                setTimeout(() => star1.classList.add('show'), 200);
+                setTimeout(() => star2.classList.add('show'), 400);
+                setTimeout(() => star3.classList.add('show'), 600);
+            }
+        }
+
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message ' + type + ' show';
+            
+            if (type === 'success') {
+                tryAgainBtn.classList.add('show');
+            } else {
+                tryAgainBtn.classList.remove('show');
+            }
+        }
+
+        function resetForm() {
+            emailInput.value = '';
+            passwordInput.value = '';
+            statusMessage.className = 'status-message';
+            tryAgainBtn.classList.remove('show');
+            setGhostState('sad');
+            emailInput.focus();
+        }
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (email === VALID_USERNAME && password === VALID_PASSWORD) {
+                // Success
+                setGhostState('happy');
+                showStatus('Login Successful!', 'success');
+            } else {
+                // Failure
+                setGhostState('crying');
+                showStatus('Login Failed!', 'error');
+                
+                // Clear password field
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+
+        // Initialize with sad state
+        setGhostState('sad');
+    </script>
+</body>
+</html>
