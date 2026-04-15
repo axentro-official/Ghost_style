@@ -38,13 +38,13 @@
             color: #9fef48;
         }
 
-        /* Main Container - HORIZONTAL LAYOUT */
+        /* Main Container - HORIZONTAL LAYOUT (Left: Ghosts, Right: Form) */
         .login-container {
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             display: flex;
-            flex-direction: row; /* FORCE HORIZONTAL */
+            flex-direction: row;
             max-width: 950px;
             width: 100%;
             min-height: 480px;
@@ -290,17 +290,17 @@
         <h1><span>Spooky</span> Login Form</h1>
     </div>
 
-    <!-- MAIN CONTAINER: Ghosts LEFT + Form RIGHT -->
+    <!-- MAIN CONTAINER: LEFT (Ghosts) + RIGHT (Form) -->
     <div class="login-container">
         
-        <!-- LEFT SIDE: GHOSTS -->
+        <!-- LEFT SECTION: GHOSTS -->
         <div class="ghosts-section">
             <div class="ghost-container">
                 
                 <!-- Speech Bubble -->
                 <div id="speechBubble" class="speech-bubble"></div>
                 
-                <!-- Stars -->
+                <!-- Stars (for success state) -->
                 <svg class="star" id="star1" style="top: 70px; right: 30px; width: 26px; height: 26px;" viewBox="0 0 24 24" fill="#333">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
@@ -316,10 +316,11 @@
                     
                     <!-- SMALL GHOST (Left) -->
                     <g id="smallGhost" transform="translate(15, 165)">
+                        <!-- Ghost Body -->
                         <path d="M70 0 C31.34 0 0 31.34 0 70 L0 130 C0 145 10 155 20 150 C30 145 35 135 45 140 C55 145 60 155 70 150 C80 145 85 135 95 140 C105 145 110 155 120 150 C130 145 140 130 140 130 L140 70 C140 31.34 108.66 0 70 0 Z" 
                               fill="white" stroke="#333" stroke-width="3"/>
                         
-                        <!-- SAD FACE -->
+                        <!-- SAD FACE (Default State) - As in Image 1 & 2 -->
                         <g id="smallGhostFaceSad">
                             <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
                             <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
@@ -328,32 +329,38 @@
                             <ellipse cx="102" cy="95" rx="6" ry="8" fill="#4fc3f7"/>
                         </g>
 
-                        <!-- CRYING FACE -->
-                        <g id="smallGhostFaceCrying" style="display: none;">
+                        <!-- WORRIED FACE (Error State) - As in Image 2 -->
+                        <g id="smallGhostFaceWorried" style="display: none;">
                             <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
                             <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
-                            <path d="M 50 118 Q 70 108 90 118" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="38" cy="98" rx="6" ry="8" fill="#4fc3f7"/>
-                            <ellipse cx="102" cy="98" rx="6" ry="8" fill="#4fc3f7"/>
+                            <path d="M 55 115 Q 70 108 85 115" stroke="#c53030" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </g>
 
-                        <!-- HAPPY FACE -->
+                        <!-- HAPPY FACE (Success State) - As in Image 3 -->
                         <g id="smallGhostFaceHappy" style="display: none;">
-                            <path d="M 35 70 Q 45 60 55 70" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
-                            <path d="M 85 70 Q 95 60 105 70" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="35" cy="82" rx="8" ry="5" fill="#ffcdd2" opacity="0.6"/>
-                            <ellipse cx="105" cy="82" rx="8" ry="5" fill="#ffcdd2" opacity="0.6"/>
-                            <path d="M 50 105 Q 70 125 90 105" stroke="#333" stroke-width="3" fill="#ef5350" stroke-linecap="round"/>
-                            <path d="M 20 90 Q 15 80 25 75 M 120 90 Q 125 80 115 75" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <!-- Happy closed eyes -->
+                            <path d="M 35 72 Q 45 62 55 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M 85 72 Q 95 62 105 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            
+                            <!-- Rosy cheeks -->
+                            <ellipse cx="35" cy="84" rx="8" ry="5" fill="#ffcdd2" opacity="0.7"/>
+                            <ellipse cx="105" cy="84" rx="8" ry="5" fill="#ffcdd2" opacity="0.7"/>
+                            
+                            <!-- Big happy smile -->
+                            <path d="M 50 105 Q 70 128 90 105" stroke="#333" stroke-width="3" fill="#ef5350" stroke-linecap="round"/>
+                            
+                            <!-- Hand up -->
+                            <path d="M 22 92 Q 12 78 26 68" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </g>
                     </g>
 
                     <!-- LARGE GHOST (Right) -->
                     <g id="largeGhost" transform="translate(105, 125)">
+                        <!-- Ghost Body -->
                         <path d="M85 0 C38.06 0 0 38.06 0 85 L0 160 C0 178 12 190 25 184 C38 178 44 166 56 172 C68 178 74 190 86 184 C98 178 104 166 116 172 C128 178 134 190 146 184 C158 178 170 160 170 160 L170 85 C170 38.06 131.94 0 85 0 Z" 
                               fill="white" stroke="#333" stroke-width="3"/>
                         
-                        <!-- SAD FACE -->
+                        <!-- SAD FACE (Default State) - As in Image 1 -->
                         <g id="largeGhostFaceSad">
                             <ellipse cx="55" cy="90" rx="10" ry="13" fill="#333"/>
                             <ellipse cx="115" cy="90" rx="10" ry="13" fill="#333"/>
@@ -362,35 +369,49 @@
                             <ellipse cx="124" cy="115" rx="7" ry="10" fill="#4fc3f7"/>
                         </g>
 
-                        <!-- CRYING FACE -->
+                        <!-- CRYING FACE (Error State) - As in Image 2 -->
                         <g id="largeGhostFaceCrying" style="display: none;">
-                            <path d="M 42 88 L 68 92 M 68 88 L 42 92" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
-                            <path d="M 102 88 L 128 92 M 128 88 L 102 92" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
-                            <ellipse cx="85" cy="135" rx="18" ry="22" fill="#ef5350"/>
-                            <path d="M 73 128 Q 85 138 97 128" stroke="#333" stroke-width="2.5" fill="none"/>
-                            <ellipse cx="46" cy="118" rx="7" ry="11" fill="#4fc3f7"/>
-                            <ellipse cx="124" cy="118" rx="7" ry="11" fill="#4fc3f7"/>
-                            <path d="M 25 140 Q 15 125 28 115 M 145 140 Q 155 125 142 115" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            <!-- Closed crying eyes (X shape or lines) -->
+                            <path d="M 42 88 L 68 94 M 68 88 L 42 94" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
+                            <path d="M 102 88 L 128 94 M 128 88 L 102 94" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
+                            
+                            <!-- Open crying mouth (orange/red as in image) -->
+                            <ellipse cx="85" cy="135" rx="20" ry="24" fill="#dd6b20"/>
+                            <path d="M 72 128 Q 85 140 98 128" stroke="#333" stroke-width="2.5" fill="none"/>
+                            
+                            <!-- Tear drop -->
+                            <ellipse cx="108" cy="118" rx="7" ry="11" fill="#4fc3f7"/>
+                            
+                            <!-- Hands up (worried gesture) -->
+                            <path d="M 25 138 Q 12 122 28 112 M 145 138 Q 158 122 142 112" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                         </g>
 
-                        <!-- HAPPY FACE -->
+                        <!-- HAPPY FACE (Success State) - As in Image 3 -->
                         <g id="largeGhostFaceHappy" style="display: none;">
+                            <!-- Happy closed eyes -->
                             <path d="M 42 88 Q 55 76 68 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                             <path d="M 102 88 Q 115 76 128 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="42" cy="102" rx="12" ry="7" fill="#ffcdd2" opacity="0.6"/>
-                            <ellipse cx="128" cy="102" rx="12" ry="7" fill="#ffcdd2" opacity="0.6"/>
-                            <path d="M 58 125 Q 85 155 112 125" stroke="#333" stroke-width="3.5" fill="#ef5350" stroke-linecap="round"/>
-                            <path d="M 22 130 Q 8 110 25 95 M 148 130 Q 162 110 145 95" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                            
+                            <!-- Rosy cheeks -->
+                            <ellipse cx="42" cy="104" rx="13" ry="7" fill="#ffcdd2" opacity="0.7"/>
+                            <ellipse cx="128" cy="104" rx="13" ry="7" fill="#ffcdd2" opacity="0.7"/>
+                            
+                            <!-- Big happy smile -->
+                            <path d="M 58 125 Q 85 158 112 125" stroke="#333" stroke-width="3.5" fill="#ef5350" stroke-linecap="round"/>
+                            
+                            <!-- Both hands up (celebration) -->
+                            <path d="M 22 130 Q 6 110 25 94 M 148 130 Q 164 110 145 94" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                         </g>
                     </g>
                 </svg>
             </div>
         </div>
 
-        <!-- RIGHT SIDE: LOGIN FORM -->
+        <!-- RIGHT SECTION: LOGIN FORM -->
         <div class="form-section">
             <h2 class="form-title">Sign In</h2>
             
+            <!-- LOGIN FORM -->
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email Address</label>
@@ -405,13 +426,18 @@
                 <button type="submit" class="sign-in-btn">Sign In</button>
             </form>
 
+            <!-- STATUS MESSAGE -->
             <div id="statusMessage" class="status-message"></div>
+            
+            <!-- TRY AGAIN BUTTON (Hidden by default) -->
             <button id="tryAgainBtn" class="try-again-btn" onclick="resetForm()">Try Again</button>
         </div>
         
     </div>
 
+    <!-- JAVASCRIPT - Enhanced Interactions -->
     <script>
+        // Get DOM elements
         const loginForm = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -419,57 +445,84 @@
         const speechBubble = document.getElementById('speechBubble');
         const tryAgainBtn = document.getElementById('tryAgainBtn');
 
+        // Ghost face elements - Small Ghost
         const smallGhostFaceSad = document.getElementById('smallGhostFaceSad');
-        const smallGhostFaceCrying = document.getElementById('smallGhostFaceCrying');
+        const smallGhostFaceWorried = document.getElementById('smallGhostFaceWorried');
         const smallGhostFaceHappy = document.getElementById('smallGhostFaceHappy');
         
+        // Ghost face elements - Large Ghost
         const largeGhostFaceSad = document.getElementById('largeGhostFaceSad');
         const largeGhostFaceCrying = document.getElementById('largeGhostFaceCrying');
         const largeGhostFaceHappy = document.getElementById('largeGhostFaceHappy');
 
+        // Star elements
         const star1 = document.getElementById('star1');
         const star2 = document.getElementById('star2');
         const star3 = document.getElementById('star3');
 
+        // Valid credentials - UPDATED PASSWORD to 1407
         const VALID_USERNAME = 'admin';
-        const VALID_PASSWORD = '140';
+        const VALID_PASSWORD = '1407';
 
+        /**
+         * Set ghost animation state
+         * @param {string} state - 'sad', 'worried', or 'happy'
+         */
         function setGhostState(state) {
+            // Hide ALL faces first
             smallGhostFaceSad.style.display = 'none';
-            smallGhostFaceCrying.style.display = 'none';
+            smallGhostFaceWorried.style.display = 'none';
             smallGhostFaceHappy.style.display = 'none';
             
             largeGhostFaceSad.style.display = 'none';
             largeGhostFaceCrying.style.display = 'none';
             largeGhostFaceHappy.style.display = 'none';
 
+            // Hide stars
             star1.classList.remove('show');
             star2.classList.remove('show');
             star3.classList.remove('show');
 
+            // Hide speech bubble
             speechBubble.classList.remove('show');
             speechBubble.textContent = '';
 
-            if (state === 'sad') {
-                smallGhostFaceSad.style.display = 'block';
-                largeGhostFaceSad.style.display = 'block';
-            } else if (state === 'crying') {
-                smallGhostFaceCrying.style.display = 'block';
-                largeGhostFaceCrying.style.display = 'block';
-                speechBubble.textContent = 'Wrong Password';
-                setTimeout(() => speechBubble.classList.add('show'), 100);
-            } else if (state === 'happy') {
-                smallGhostFaceHappy.style.display = 'block';
-                largeGhostFaceHappy.style.display = 'block';
-                speechBubble.textContent = 'Correct Password!';
-                setTimeout(() => speechBubble.classList.add('show'), 100);
-                
-                setTimeout(() => star1.classList.add('show'), 200);
-                setTimeout(() => star2.classList.add('show'), 400);
-                setTimeout(() => star3.classList.add('show'), 600);
+            // Show appropriate faces based on state
+            switch(state) {
+                case 'sad':
+                    // Default state - Sad ghosts with blue tears
+                    smallGhostFaceSad.style.display = 'block';
+                    largeGhostFaceSad.style.display = 'block';
+                    break;
+                    
+                case 'worried':
+                    // Error state - Worried/Crying ghosts
+                    smallGhostFaceWorried.style.display = 'block';
+                    largeGhostFaceCrying.style.display = 'block';
+                    speechBubble.textContent = 'Wrong Password';
+                    setTimeout(() => speechBubble.classList.add('show'), 100);
+                    break;
+                    
+                case 'happy':
+                    // Success state - Happy celebrating ghosts
+                    smallGhostFaceHappy.style.display = 'block';
+                    largeGhostFaceHappy.style.display = 'block';
+                    speechBubble.textContent = 'Correct Password!';
+                    setTimeout(() => speechBubble.classList.add('show'), 100);
+                    
+                    // Show stars with staggered delay
+                    setTimeout(() => star1.classList.add('show'), 200);
+                    setTimeout(() => star2.classList.add('show'), 400);
+                    setTimeout(() => star3.classList.add('show'), 600);
+                    break;
             }
         }
 
+        /**
+         * Show status message
+         * @param {string} message - Message text
+         * @param {string} type - 'error' or 'success'
+         */
         function showStatus(message, type) {
             statusMessage.textContent = message;
             statusMessage.className = 'status-message ' + type + ' show';
@@ -481,6 +534,9 @@
             }
         }
 
+        /**
+         * Reset form to initial state
+         */
         function resetForm() {
             emailInput.value = '';
             passwordInput.value = '';
@@ -490,24 +546,64 @@
             emailInput.focus();
         }
 
+        /**
+         * Handle input interactions - Make ghosts react while typing
+         */
+        function handleInputChange() {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Only react if we're not already in success state
+            if (!tryAgainBtn.classList.contains('show')) {
+                if (email.length > 0 || password.length > 0) {
+                    // User is typing - keep sad but attentive (could add subtle animation here)
+                    if (email.length > 0 && password.length > 0) {
+                        // Both fields filled - slightly less sad (optional enhancement)
+                    }
+                } else {
+                    // Empty form - back to default sad
+                    setGhostState('sad');
+                }
+            }
+        }
+
+        // Add event listeners for input interactions
+        emailInput.addEventListener('input', handleInputChange);
+        passwordInput.addEventListener('input', handleInputChange);
+
+        // Focus effects
+        emailInput.addEventListener('focus', function() {
+            // Could add subtle ghost animation on focus
+        });
+
+        passwordInput.addEventListener('focus', function() {
+            // Could add subtle ghost animation on focus
+        });
+
+        // Form submit handler
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const email = emailInput.value.trim();
             const password = passwordInput.value;
 
+            // Validate credentials
             if (email === VALID_USERNAME && password === VALID_PASSWORD) {
+                // SUCCESS - Happy celebration!
                 setGhostState('happy');
                 showStatus('Login Successful!', 'success');
             } else {
-                setGhostState('crying');
+                // FAILURE - Wrong password reaction
+                setGhostState('worried');
                 showStatus('Login Failed!', 'error');
                 
+                // Clear password field for security
                 passwordInput.value = '';
                 passwordInput.focus();
             }
         });
 
+        // Initialize with sad state
         setGhostState('sad');
     </script>
 </body>
