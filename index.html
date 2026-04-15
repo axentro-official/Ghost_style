@@ -38,70 +38,78 @@
             color: #9fef48;
         }
 
-        /* MAIN CONTAINER - FORCE HORIZONTAL LAYOUT */
+        /* MAIN CONTAINER - HORIZONTAL LAYOUT */
         .login-container {
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             
-            /* FORCE HORIZONTAL - LEFT RIGHT SPLIT */
-            display: flex !important;
-            flex-direction: row !important;
+            display: flex;
+            flex-direction: row;
             
             width: 100%;
             max-width: 950px;
-            min-height: 500px;
-            overflow: hidden;
+            min-height: 480px;
+            
+            /* FIX: Allow content to show fully - NO CROPPING! */
+            overflow: visible;
         }
 
-        /* LEFT SIDE - GHOSTS SECTION (45% width) */
+        /* LEFT SIDE - GHOSTS SECTION */
         .ghosts-section {
-            flex: 0 0 45% !important;
-            width: 45% !important;
-            min-width: 350px;
+            flex: 1 1 45%;
+            max-width: 450px;
+            
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 30px;
+            padding: 25px 20px;
             background-color: #fafafa;
             border-right: 2px solid #e0e0e0;
+            
+            /* FIX: Ensure no cropping */
+            overflow: visible;
+            min-height: 400px;
         }
 
-        /* RIGHT SIDE - FORM SECTION (55% width) */
+        /* RIGHT SIDE - FORM SECTION */
         .form-section {
-            flex: 0 0 55% !important;
-            width: 55% !important;
-            min-width: 400px;
-            padding: 50px 40px;
+            flex: 1 1 55%;
+            max-width: 550px;
+            
+            padding: 40px 35px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             background-color: #ffffff;
+            
+            overflow: visible;
+            min-height: 400px;
         }
 
         .form-title {
-            font-size: 36px;
+            font-size: 34px;
             color: #333333;
-            margin-bottom: 28px;
+            margin-bottom: 25px;
             font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
             font-size: 14px;
             color: #666666;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
             font-weight: 500;
         }
 
         .form-group input {
             width: 100%;
-            padding: 13px 15px;
+            padding: 12px 14px;
             border: 2px solid #d0d0d0;
             border-radius: 8px;
             font-size: 15px;
@@ -121,16 +129,16 @@
 
         .sign-in-btn {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             background: linear-gradient(135deg, #6b7fd9 0%, #8b5fbf 100%);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .sign-in-btn:hover {
@@ -138,28 +146,34 @@
             box-shadow: 0 6px 20px rgba(107, 127, 217, 0.4);
         }
 
-        /* Ghost Container */
+        /* Ghost Container - RESPONSIVE SIZING */
         .ghost-container {
             position: relative;
-            width: 260px;
-            height: 300px;
+            width: 90%;
+            max-width: 280px;
+            height: auto;
+            aspect-ratio: 280 / 320;
+            
+            overflow: visible;
         }
 
         .ghost-svg {
             width: 100%;
             height: 100%;
+            display: block;
+            overflow: visible;
         }
 
         /* Speech Bubble */
         .speech-bubble {
             position: absolute;
-            top: 5px;
-            left: 5px;
+            top: 0;
+            left: 0;
             background: white;
             border: 3px solid #333;
             border-radius: 15px;
-            padding: 10px 18px;
-            font-size: 16px;
+            padding: 10px 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #000;
             opacity: 0;
@@ -168,13 +182,14 @@
             z-index: 10;
             white-space: nowrap;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: visible;
         }
 
         .speech-bubble::after {
             content: '';
             position: absolute;
             bottom: -11px;
-            left: 25px;
+            left: 22px;
             width: 0;
             height: 0;
             border-left: 11px solid transparent;
@@ -189,12 +204,12 @@
 
         /* Status Messages */
         .status-message {
-            margin-top: 14px;
-            padding: 13px;
+            margin-top: 12px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.3s ease;
@@ -220,16 +235,16 @@
 
         .try-again-btn {
             width: 100%;
-            padding: 13px;
+            padding: 12px;
             background-color: #718096;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 12px;
+            margin-top: 10px;
             opacity: 0;
             transform: translateY(-10px);
             pointer-events: none;
@@ -251,6 +266,7 @@
             opacity: 0;
             transition: all 0.5s ease;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            overflow: visible;
         }
 
         .star.show {
@@ -263,37 +279,128 @@
             50% { transform: scale(1.3) rotate(180deg); }
         }
 
-        /* IMPORTANT: Keep HORIZONTAL on ALL screen sizes */
+        /* ========== RESPONSIVE DESIGN - All Screen Sizes ========== */
+
+        /* Tablets and Small Laptops */
         @media (max-width: 900px) {
             .login-container {
-                flex-direction: row !important; /* FORCE row, NOT column */
                 max-width: 100%;
-                min-height: 450px;
+                min-height: 420px;
             }
             
             .ghosts-section {
-                flex: 0 0 42% !important;
-                min-width: 300px;
-                padding: 20px;
+                flex: 1 1 42%;
+                padding: 20px 15px;
+                min-height: 350px;
             }
             
             .form-section {
-                flex: 0 0 58% !important;
-                min-width: 320px;
-                padding: 35px 30px;
+                flex: 1 1 58%;
+                padding: 30px 25px;
+                min-height: 350px;
             }
             
             .header h1 {
-                font-size: 48px;
+                font-size: 52px;
             }
             
             .form-title {
-                font-size: 30px;
+                font-size: 28px;
             }
             
             .ghost-container {
-                width: 220px;
-                height: 260px;
+                max-width: 240px;
+            }
+        }
+
+        /* Mobile Phones - Still Horizontal but Optimized */
+        @media (max-width: 650px) {
+            body {
+                padding: 20px 10px;
+            }
+            
+            .header {
+                margin-bottom: 25px;
+            }
+            
+            .header h1 {
+                font-size: 38px;
+            }
+            
+            .login-container {
+                flex-direction: row !important;
+                min-height: 380px;
+                border-radius: 10px;
+            }
+            
+            .ghosts-section {
+                flex: 1 1 40%;
+                padding: 15px 10px;
+                min-height: 320px;
+                border-right: 1.5px solid #e0e0e0;
+            }
+            
+            .form-section {
+                flex: 1 1 60%;
+                padding: 25px 20px;
+                min-height: 320px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+                margin-bottom: 18px;
+            }
+            
+            .form-group {
+                margin-bottom: 14px;
+            }
+            
+            .form-group label {
+                font-size: 13px;
+            }
+            
+            .form-group input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .sign-in-btn {
+                padding: 11px;
+                font-size: 15px;
+            }
+            
+            .ghost-container {
+                max-width: 180px;
+            }
+            
+            .speech-bubble {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+            
+            .status-message {
+                font-size: 13px;
+                padding: 10px;
+            }
+            
+            .try-again-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        /* Very Small Screens */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .login-container {
+                min-height: 340px;
+            }
+            
+            .ghost-container {
+                max-width: 150px;
             }
         }
     </style>
@@ -303,7 +410,7 @@
         <h1><span>Spooky</span> Login Form</h1>
     </div>
 
-    <!-- CONTAINER: LEFT (GHOSTS) + RIGHT (FORM) - HORIZONTAL -->
+    <!-- CONTAINER: LEFT (GHOSTS) + RIGHT (FORM) -->
     <div class="login-container">
         
         <!-- LEFT: GHOSTS SECTION -->
@@ -314,25 +421,25 @@
                 <div id="speechBubble" class="speech-bubble"></div>
                 
                 <!-- Stars -->
-                <svg class="star" id="star1" style="top: 60px; right: 25px; width: 24px; height: 24px;" viewBox="0 0 24 24" fill="#333">
+                <svg class="star" id="star1" style="top: 5%; right: 8%; width: 9%; max-width: 26px;" viewBox="0 0 24 24" fill="#333">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <svg class="star" id="star2" style="top: 100px; left: 10px; width: 20px; height: 20px;" viewBox="0 0 24 24" fill="#333">
+                <svg class="star" id="star2" style="top: 33%; left: 4%; width: 7%; max-width: 22px;" viewBox="0 0 24 24" fill="#333">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <svg class="star" id="star3" style="bottom: 80px; right: 10px; width: 22px; height: 22px;" viewBox="0 0 24 24" fill="#333">
+                <svg class="star" id="star3" style="bottom: 28%; right: 5%; width: 8%; max-width: 24px;" viewBox="0 0 24 24" fill="#333">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
 
-                <!-- GHOSTS SVG -->
-                <svg class="ghost-svg" viewBox="0 0 280 330" xmlns="http://www.w3.org/2000/svg">
+                <!-- GHOSTS SVG - Fully Visible -->
+                <svg class="ghost-svg" viewBox="0 0 280 330" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                     
                     <!-- SMALL GHOST (Left) -->
                     <g id="smallGhost" transform="translate(15, 165)">
                         <path d="M70 0 C31.34 0 0 31.34 0 70 L0 130 C0 145 10 155 20 150 C30 145 35 135 45 140 C55 145 60 155 70 150 C80 145 85 135 95 140 C105 145 110 155 120 150 C130 145 140 130 140 130 L140 70 C140 31.34 108.66 0 70 0 Z" 
                               fill="white" stroke="#333" stroke-width="3"/>
                         
-                        <!-- SAD FACE (Default) -->
+                        <!-- SAD FACE (Default State) -->
                         <g id="smallGhostFaceSad">
                             <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
                             <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
@@ -341,14 +448,14 @@
                             <ellipse cx="102" cy="95" rx="6" ry="8" fill="#4fc3f7"/>
                         </g>
 
-                        <!-- WORRIED FACE (Error) -->
+                        <!-- WORRIED FACE (Error State) -->
                         <g id="smallGhostFaceWorried" style="display: none;">
                             <ellipse cx="45" cy="75" rx="8" ry="10" fill="#333"/>
                             <ellipse cx="95" cy="75" rx="8" ry="10" fill="#333"/>
                             <path d="M 55 115 Q 70 108 85 115" stroke="#c53030" stroke-width="3" fill="none" stroke-linecap="round"/>
                         </g>
 
-                        <!-- HAPPY FACE (Success) -->
+                        <!-- HAPPY FACE (Success State) -->
                         <g id="smallGhostFaceHappy" style="display: none;">
                             <path d="M 35 72 Q 45 62 55 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
                             <path d="M 85 72 Q 95 62 105 72" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
@@ -364,7 +471,7 @@
                         <path d="M85 0 C38.06 0 0 38.06 0 85 L0 160 C0 178 12 190 25 184 C38 178 44 166 56 172 C68 178 74 190 86 184 C98 178 104 166 116 172 C128 178 134 190 146 184 C158 178 170 160 170 160 L170 85 C170 38.06 131.94 0 85 0 Z" 
                               fill="white" stroke="#333" stroke-width="3"/>
                         
-                        <!-- SAD FACE (Default) -->
+                        <!-- SAD FACE (Default State) -->
                         <g id="largeGhostFaceSad">
                             <ellipse cx="55" cy="90" rx="10" ry="13" fill="#333"/>
                             <ellipse cx="115" cy="90" rx="10" ry="13" fill="#333"/>
@@ -373,7 +480,7 @@
                             <ellipse cx="124" cy="115" rx="7" ry="10" fill="#4fc3f7"/>
                         </g>
 
-                        <!-- CRYING FACE (Error) -->
+                        <!-- CRYING FACE (Error State) -->
                         <g id="largeGhostFaceCrying" style="display: none;">
                             <path d="M 42 88 L 68 94 M 68 88 L 42 94" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
                             <path d="M 102 88 L 128 94 M 128 88 L 102 94" stroke="#333" stroke-width="3.5" stroke-linecap="round"/>
@@ -383,7 +490,7 @@
                             <path d="M 25 138 Q 12 122 28 112 M 145 138 Q 158 122 142 112" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                         </g>
 
-                        <!-- HAPPY FACE (Success) -->
+                        <!-- HAPPY FACE (Success State) -->
                         <g id="largeGhostFaceHappy" style="display: none;">
                             <path d="M 42 88 Q 55 76 68 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                             <path d="M 102 88 Q 115 76 128 88" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>
